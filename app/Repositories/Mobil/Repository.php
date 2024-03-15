@@ -27,7 +27,7 @@ class Repository extends KendaraanRepo{
         $typeField = KendaraanModel::TYPE_FIELD;
 
         foreach ($data as $datum) {
-            $results[] = new MobilServiceModel($datum->$vehicleTypeField, $datum->$yearOfReleaseField, $datum->$colorField, $datum->$priceField, $datum->$stokField, $datum->$engineField, $datum->$passengerField, $datum->$typeField);
+            $results[] = new MobilServiceModel($datum->getIdAttribute(), $datum->$vehicleTypeField, $datum->$yearOfReleaseField, $datum->$colorField, $datum->$priceField, $datum->$stokField, $datum->$engineField, $datum->$passengerField, $datum->$typeField);
         }
 
         return $results;

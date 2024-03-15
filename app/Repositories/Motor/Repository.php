@@ -27,7 +27,7 @@ class Repository extends KendaraanRepo {
         $transmissionTypeField = KendaraanModel::TRANSMISSION_TYPE_FIELD;
 
         foreach ($data as $datum) {
-            $results[] = new MotorServiceModel($datum->$vehicleTypeField, $datum->$yearOfReleaseField, $datum->$colorField, $datum->$priceField, $datum->$stokField, $datum->$engineField, $datum->$suspensionTypeField, $datum->$transmissionTypeField);
+            $results[] = new MotorServiceModel($datum->getIdAttribute(), $datum->$vehicleTypeField, $datum->$yearOfReleaseField, $datum->$colorField, $datum->$priceField, $datum->$stokField, $datum->$engineField, $datum->$suspensionTypeField, $datum->$transmissionTypeField);
         }
 
         return $results;
