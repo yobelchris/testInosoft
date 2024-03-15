@@ -11,7 +11,7 @@ class Kendaraan extends Controller
     public function getKendaraanList(Request $request) {
         $vehicleType = $request->input('vehicle_type', '');
 
-        $repo = $this->getRepository($vehicleType);
+        $repo = $this->getKendaraanRepository($vehicleType);
 
         try {
             $vehicles = (new KendaraanService($repo))->getKendaraanList();
@@ -34,7 +34,7 @@ class Kendaraan extends Controller
             return $this->setJsonResponse(null, 200);
         }
 
-        $repo = $this->getRepository();
+        $repo = $this->getKendaraanRepository();
 
         $isSuccess = (new KendaraanService($repo))->updateKendaraanStok($vehicleID, $addedStock);
         if($isSuccess) {

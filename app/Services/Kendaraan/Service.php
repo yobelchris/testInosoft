@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Services\Kendaraan;
 
 use App\Services\Kendaraan\Interfaces\Repositories\Kendaraan as KendaraanRepo;
-use function Sodium\add;
 
 class Service
 {

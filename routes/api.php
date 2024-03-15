@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Kendaraan;
+use App\Http\Controllers\Transaksi;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('kendaraan')->group(function (){
     Route::get('/', [Kendaraan::class, 'getKendaraanList']);
     Route::patch('/stock', [Kendaraan::class, 'updateKendaraanStock']);
+});
+
+Route::prefix('transaction')->group(function(){
+    Route::post('/', [Transaksi::class, 'insertTransaction']);
 });
