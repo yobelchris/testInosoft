@@ -91,4 +91,23 @@ class Transaksi extends Controller
             return $this->setJsonResponse(null, 500, $e->getMessage());
         }
     }
+
+    public function getTransactionDetail(Request $request) {
+        $transactionID = $request->input('transaction_id', '');
+
+        if($transactionID == '') {
+            return $this->setJsonResponse(null, 400, 'transaction_id is required');
+        }
+
+        $kendaraanRepo = $this->getKendaraanRepository();
+        $transaksiRepo = $this->getTransaksiRepo();
+
+        try{
+            $transactions = (new TransaksiService($transaksiRepo, $kendaraanRepo))->getTransactionDetail($transactionID);
+
+            return $this->setJsonResponse($transactions, 200);
+        }catch (\Exception $e) {
+            return $this->setJsonResponse(null, 500, $e->getMessage());
+        }
+    }
 }

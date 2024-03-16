@@ -103,4 +103,21 @@ class Repository implements Transaksi
 
         return $results;
     }
+
+    public function getTransactionDetail(string $transactionID) : array {
+        $data = TransaksiDetailModel::all()->where(TransaksiDetailModel::TRANSACTION_ID_FIELD, $transactionID);
+
+        $results = [];
+
+        $quantityField = TransaksiDetailModel::TRANSACTION_DETAIL_QUANTITY_FIELD;
+        $totalField = TransaksiDetailModel::TRANSACTION_DETAIL_TOTAL_FIELD;
+        $vehicleID = TransaksiDetailModel::TRANSACTION_DETAIL_VEHICLE_ID_FIELD;
+        $transactionID = TransaksiDetailModel::TRANSACTION_ID_FIELD;
+
+        foreach ($data as $datum) {
+            $results[] = new TransaksiDetailServiceModel($datum->$quantityField, $datum->$totalField, $datum->$vehicleID, $datum->$transactionID);
+        }
+
+        return $results;
+    }
 }

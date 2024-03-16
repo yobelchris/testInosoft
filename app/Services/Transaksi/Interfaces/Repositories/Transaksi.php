@@ -13,4 +13,5 @@ interface Transaksi
     public function insertTransactionDetails(TransaksiDetailServiceModel $transaksiDetailData) : TransaksiDetailServiceModel|bool;
     public function deleteTransactionDetailByIDs(array $id) : bool;
     public function getTransaction(string $customerName, string $userID): array;
+    public function getTransactionDetail(string $transactionID) : array;
 }

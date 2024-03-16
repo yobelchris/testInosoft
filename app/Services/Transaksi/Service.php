@@ -104,4 +104,8 @@ class Service
     public function getTransaction(string $customerName, string $userID) : array {
         return $this->transaksiRepo->getTransaction($customerName, $userID);
     }
+
+    public function getTransactionDetail(string $transactionID) : array {
+        return $this->transaksiRepo->getTransactionDetail($transactionID);
+    }
 }
