@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
 use App\Services\Transaksi\Service as TransaksiService;
-use App\Services\Transaksi\Interfaces\Repositories\Transaksi as TransaksiRepoInterface;
 
 use App\Services\Transaksi\Models\Transaksi as TransaksiModel;
 use App\Services\Transaksi\Models\TransaksiDetail as TransaksiDetailModel;
@@ -37,6 +37,7 @@ class Transaksi extends Controller
             return $this->setJsonResponse(null, 400, 'details is empty');
         }
 
+        $alreadyExistedVehicleID = [];
         foreach ($transactionDetails as $detail) {
             if(!array_key_exists('quantity', $detail) || $detail['quantity'] <= 0) {
                 return $this->setJsonResponse(null, 400, 'details quantity is empty');
@@ -49,6 +50,12 @@ class Transaksi extends Controller
             if(!array_key_exists('vehicle_id', $detail) || $detail['vehicle_id'] == '') {
                 return $this->setJsonResponse(null, 400, 'details vehicle_id is empty');
             }
+
+            if(in_array($detail['vehicle_id'], $alreadyExistedVehicleID)) {
+                return $this->setJsonResponse(null, 400, 'vehicle_id '.$detail['vehicle_id'].' is duplicated in details');
+            }
+
+            $alreadyExistedVehicleID[] = $detail['vehicle_id'];
 
             $transaction->transaksiDetail[] = new TransaksiDetailModel($detail['quantity'], $detail['total'], $detail['vehicle_id'], '');
             $transaction->total = $transaction->total + $detail['total'];
