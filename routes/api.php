@@ -29,4 +29,5 @@ Route::prefix('transaction')->group(function(){
     Route::post('/', [Transaksi::class, 'insertTransaction']);
     Route::get('/', [Transaksi::class, 'getTransaction']);
     Route::get('/detail', [Transaksi::class, 'getTransactionDetail']);
+    Route::get('/report', [Transaksi::class, 'getTransactionReport']);
 });

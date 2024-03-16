@@ -77,7 +77,7 @@ class Repository implements Transaksi
         return $deletedTransaction > 0;
     }
 
-    public function getTransaction(string $customerName, string $userID): array
+    public function getTransaction(string $customerName, string $userID, string $transactionNumber, string $transactionID): array
     {
         $data = TransaksiModel::all();
 
@@ -87,6 +87,14 @@ class Repository implements Transaksi
 
         if ($userID != '') {
             $data = $data->where(TransaksiModel::USER_ID_FIELD, $userID);
+        }
+
+        if($transactionNumber != '') {
+            $data = $data->where(TransaksiModel::TRANSACTION_NUMBER_FIELD, $transactionNumber);
+        }
+
+        if($transactionID != '') {
+            $data = $data->where('_id', $transactionID);
         }
 
         $results = [];
@@ -104,8 +112,16 @@ class Repository implements Transaksi
         return $results;
     }
 
-    public function getTransactionDetail(string $transactionID) : array {
-        $data = TransaksiDetailModel::all()->where(TransaksiDetailModel::TRANSACTION_ID_FIELD, $transactionID);
+    public function getTransactionDetail(string $transactionID, string $vehicleID) : array {
+        $data = TransaksiDetailModel::all();
+
+        if($transactionID != '') {
+            $data = $data->where(TransaksiDetailModel::TRANSACTION_ID_FIELD, $transactionID);
+        }
+
+        if($vehicleID != '') {
+            $data = $data->where(TransaksiDetailModel::TRANSACTION_DETAIL_VEHICLE_ID_FIELD, $vehicleID);
+        }
 
         $results = [];
 

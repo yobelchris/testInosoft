@@ -8,6 +8,7 @@ use App\Services\Kendaraan\Interfaces\Repositories\Kendaraan as KendaraanRepo;
 
 use App\Services\Transaksi\Models\Transaksi as TransaksiModel;
 use App\Services\Transaksi\Models\TransaksiDetail as TransaksiDetailModel;
+use App\Services\Transaksi\Models\TransaksiKendaraanReport;
 use Illuminate\Support\Facades\DB;
 
 class Service
@@ -101,11 +102,45 @@ class Service
         return null;
     }
 
-    public function getTransaction(string $customerName, string $userID) : array {
-        return $this->transaksiRepo->getTransaction($customerName, $userID);
+    public function getTransaction(string $customerName, string $transactionNumber, string $userID) : array {
+        return $this->transaksiRepo->getTransaction($customerName, $userID, $transactionNumber, '');
     }
 
     public function getTransactionDetail(string $transactionID) : array {
-        return $this->transaksiRepo->getTransactionDetail($transactionID);
+        return $this->transaksiRepo->getTransactionDetail($transactionID, '');
+    }
+
+    public function getTransactionReport(string $vehicleID) : array {
+        $reports = [];
+        $vehicles = [];
+
+        if($vehicleID != '') {
+            $vehicle = $this->kendaraanRepo->getByID($vehicleID);
+
+            if($vehicle != null) {
+                $vehicles[] = $vehicle;
+            }
+        }else{
+            $vehicles = $this->kendaraanRepo->get(0, 0);
+        }
+
+        foreach ($vehicles as $vehicle) {
+            $transactionDetails = $this->transaksiRepo->getTransactionDetail('', $vehicle->id);
+            $vehicleSaleReport = new TransaksiKendaraanReport();
+            $vehicleSaleReport->vehicle = $vehicle;
+            $vehicleSaleReport->total = 0;
+
+            foreach ($transactionDetails as $transactionDetail) {
+                $transaction = $this->transaksiRepo->getTransaction('', '', '', $transactionDetail->transaction_id);
+                $transaction[0]->transaksiDetail[] = $transactionDetail;
+
+                $vehicleSaleReport->transactions[] = $transaction[0];
+                $vehicleSaleReport->total = $vehicleSaleReport->total + $transactionDetail->total;
+            }
+
+            $reports[] = $vehicleSaleReport;
+        }
+
+        return $reports;
     }
 }

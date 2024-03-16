@@ -16,4 +16,8 @@ class TransaksiDetail extends Model
     const TRANSACTION_DETAIL_TOTAL_FIELD = 'total';
     const TRANSACTION_DETAIL_VEHICLE_ID_FIELD = 'kendaraan_id';
     const TRANSACTION_ID_FIELD = 'transaksi_id';
+
+    public function transaksi() {
+        return $this->belongsTo(Transaksi::class);
+    }
 }

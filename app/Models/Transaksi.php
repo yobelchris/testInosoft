@@ -18,4 +18,8 @@ class Transaksi extends Model
     const USER_ID_FIELD = 'user_id';
 
     protected $dates = [self::TRANSACTION_DATE_FIELD];
+
+    public function transaksiDetail() {
+        return $this->hasMany(TransaksiDetail::class);
+    }
 }

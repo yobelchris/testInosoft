@@ -79,12 +79,13 @@ class Transaksi extends Controller
 
     public function getTransaction(Request $request) {
         $customerName = $request->input('customer_name', '');
+        $transactionNumber = $request->input('transaction_number', '');
 
         $kendaraanRepo = $this->getKendaraanRepository();
         $transaksiRepo = $this->getTransaksiRepo();
 
         try{
-            $transactions = (new TransaksiService($transaksiRepo, $kendaraanRepo))->getTransaction($customerName, '');
+            $transactions = (new TransaksiService($transaksiRepo, $kendaraanRepo))->getTransaction($customerName,$transactionNumber, '');
 
             return $this->setJsonResponse($transactions, 200);
         }catch (\Exception $e) {
@@ -106,6 +107,22 @@ class Transaksi extends Controller
             $transactions = (new TransaksiService($transaksiRepo, $kendaraanRepo))->getTransactionDetail($transactionID);
 
             return $this->setJsonResponse($transactions, 200);
+        }catch (\Exception $e) {
+            return $this->setJsonResponse(null, 500, $e->getMessage());
+        }
+    }
+
+    public function getTransactionReport(Request $request) {
+        $vehicleID = $request->input('vehicle_id', '');
+        $vehicleType = $request->input('vehicle_type', '');
+
+        $kendaraanRepo = $this->getKendaraanRepository($vehicleType);
+        $transaksiRepo = $this->getTransaksiRepo();
+
+        try{
+            $reports = (new TransaksiService($transaksiRepo, $kendaraanRepo))->getTransactionReport($vehicleID);
+
+            return $this->setJsonResponse($reports, 200);
         }catch (\Exception $e) {
             return $this->setJsonResponse(null, 500, $e->getMessage());
         }

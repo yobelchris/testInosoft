@@ -12,6 +12,7 @@ class Kendaraan extends Model
     protected $collection = 'kendaraan';
 
     const VEHICLE_TYPE_FIELD = 'vehicle_type';
+    const VEHICLE_NAME_FIELD = 'vehicle_name';
     const TYPE_FIELD = 'type';
     const ENGINE_FIELD = 'mesin';
     const SUSPENSION_TYPE_FIELD = 'tipe_suspensi';
