@@ -27,4 +27,5 @@ Route::prefix('kendaraan')->group(function (){
 
 Route::prefix('transaction')->group(function(){
     Route::post('/', [Transaksi::class, 'insertTransaction']);
+    Route::get('/', [Transaksi::class, 'getTransaction']);
 });

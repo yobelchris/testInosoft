@@ -18,7 +18,7 @@ class Kendaraan extends Controller
 
             return $this->setJsonResponse($vehicles, 200);
         }catch (Exception $e) {
-            return $this->setJsonResponse($e, 500);
+            return $this->setJsonResponse(null, 500, $e->getMessage());
         }
     }
 

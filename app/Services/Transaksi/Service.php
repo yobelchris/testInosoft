@@ -100,4 +100,8 @@ class Service
 
         return null;
     }
+
+    public function getTransaction(string $customerName, string $userID) : array {
+        return $this->transaksiRepo->getTransaction($customerName, $userID);
+    }
 }

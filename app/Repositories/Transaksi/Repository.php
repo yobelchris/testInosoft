@@ -76,4 +76,31 @@ class Repository implements Transaksi
 
         return $deletedTransaction > 0;
     }
+
+    public function getTransaction(string $customerName, string $userID): array
+    {
+        $data = TransaksiModel::all();
+
+        if ($customerName != '') {
+            $data = $data->where(TransaksiModel::CUSTOMER_NAME_FIELD, $customerName);
+        }
+
+        if ($userID != '') {
+            $data = $data->where(TransaksiModel::USER_ID_FIELD, $userID);
+        }
+
+        $results = [];
+
+        $transactionNumberField = TransaksiModel::TRANSACTION_NUMBER_FIELD;
+        $totalField = TransaksiModel::TOTAL_FIELD;
+        $transactionDateField = TransaksiModel::TRANSACTION_DATE_FIELD;
+        $customerNameField = TransaksiModel::CUSTOMER_NAME_FIELD;
+        $userIDField = TransaksiModel::USER_ID_FIELD;
+
+        foreach ($data as $datum) {
+            $results[] = new TransaksiServiceModel($datum->$transactionNumberField, $datum->$transactionDateField, $datum->$totalField, $datum->$customerNameField, $datum->$userIDField, $datum->getIdAttribute());
+        }
+
+        return $results;
+    }
 }

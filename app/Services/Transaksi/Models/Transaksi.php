@@ -15,11 +15,12 @@ class Transaksi
     /** @var TransaksiDetail[] **/
     public array $transaksiDetail;
 
-    public function __construct(string $transactionNumber, \DateTime $transactionDate, float $total, string $customerName, string $userId) {
+    public function __construct(string $transactionNumber, \DateTime $transactionDate, float $total, string $customerName, string $userId, string $id = '') {
         $this->transaction_number = $transactionNumber;
         $this->transaction_date = $transactionDate;
         $this->total = $total;
         $this->customer_name = $customerName;
         $this->user_id = $userId;
+        $this->id = $id;
     }
 }

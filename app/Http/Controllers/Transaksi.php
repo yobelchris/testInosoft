@@ -64,9 +64,24 @@ class Transaksi extends Controller
                 return $this->setJsonResponse(null, 500, $isInsertSuccess->message);
             }
         }catch (\Exception $e){
-            return $this->setJsonResponse($e, 500, 'insert failed');
+            return $this->setJsonResponse($e, 500, $e->getMessage());
         }
 
         return $this->setJsonResponse(null, 200);
+    }
+
+    public function getTransaction(Request $request) {
+        $customerName = $request->input('customer_name', '');
+
+        $kendaraanRepo = $this->getKendaraanRepository();
+        $transaksiRepo = $this->getTransaksiRepo();
+
+        try{
+            $transactions = (new TransaksiService($transaksiRepo, $kendaraanRepo))->getTransaction($customerName, '');
+
+            return $this->setJsonResponse($transactions, 200);
+        }catch (\Exception $e) {
+            return $this->setJsonResponse(null, 500, $e->getMessage());
+        }
     }
 }
