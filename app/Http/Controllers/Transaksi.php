@@ -57,7 +57,7 @@ class Transaksi extends Controller
 
             $alreadyExistedVehicleID[] = $detail['vehicle_id'];
 
-            $transaction->transaksiDetail[] = new TransaksiDetailModel($detail['quantity'], $detail['total'], $detail['vehicle_id'], '');
+            $transaction->transaksiDetail[] = new TransaksiDetailModel('',$detail['quantity'], $detail['total'], $detail['vehicle_id'], '');
             $transaction->total = $transaction->total + $detail['total'];
         }
 

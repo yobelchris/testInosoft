@@ -9,7 +9,6 @@ use App\Services\Kendaraan\Interfaces\Repositories\Kendaraan as KendaraanRepo;
 use App\Services\Transaksi\Models\Transaksi as TransaksiModel;
 use App\Services\Transaksi\Models\TransaksiDetail as TransaksiDetailModel;
 use App\Services\Transaksi\Models\TransaksiKendaraanReport;
-use Illuminate\Support\Facades\DB;
 
 class Service
 {

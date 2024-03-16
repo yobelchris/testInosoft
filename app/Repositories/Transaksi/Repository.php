@@ -131,7 +131,7 @@ class Repository implements Transaksi
         $transactionID = TransaksiDetailModel::TRANSACTION_ID_FIELD;
 
         foreach ($data as $datum) {
-            $results[] = new TransaksiDetailServiceModel($datum->$quantityField, $datum->$totalField, $datum->$vehicleID, $datum->$transactionID);
+            $results[] = new TransaksiDetailServiceModel($datum->getIdAttribute(), $datum->$quantityField, $datum->$totalField, $datum->$vehicleID, $datum->$transactionID);
         }
 
         return $results;
