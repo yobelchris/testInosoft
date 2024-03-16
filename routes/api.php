@@ -24,6 +24,8 @@ Route::middleware('jwt.verify')->get('/user', function (Request $request) {
 Route::middleware(['jwt.verify'])->group(function (){
     Route::prefix('kendaraan')->group(function (){
         Route::get('/', [Kendaraan::class, 'getKendaraanList']);
+        Route::post('/motor',[Kendaraan::class, 'addKendaraanMotor']);
+        Route::post('/mobil',[Kendaraan::class, 'addKendaraanMobil']);
         Route::patch('/stock', [Kendaraan::class, 'updateKendaraanStock']);
     });
 

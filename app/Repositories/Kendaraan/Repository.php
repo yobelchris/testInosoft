@@ -56,5 +56,15 @@ class Repository implements KendaraanInterface{
 
             return $vehicle->save();
         }
+
+        return true;
+    }
+
+    /**
+     * @param KendaraanServiceModel $vehicleData
+     **/
+    public function insertVehicle($vehicleData): bool
+    {
+        return true;
     }
 }

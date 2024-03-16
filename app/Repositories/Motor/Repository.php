@@ -5,6 +5,7 @@ namespace App\Repositories\Motor;
 
 use App\Repositories\Kendaraan\Repository as KendaraanRepo;
 use App\Models\Kendaraan as KendaraanModel;
+use App\Services\Kendaraan\Models\Kendaraan as KendaraanServiceModel;
 use App\Services\Kendaraan\Models\Motor as MotorServiceModel;
 
 class Repository extends KendaraanRepo {
@@ -32,5 +33,34 @@ class Repository extends KendaraanRepo {
         }
 
         return $results;
+    }
+
+    /**
+     * @param MotorServiceModel $vehicleData
+    **/
+    public function insertVehicle($vehicleData): bool
+    {
+        $vehicleTypeField = KendaraanModel::VEHICLE_TYPE_FIELD;
+        $yearOfReleaseField = KendaraanModel::YEAR_OF_RELEASE_FIELD;
+        $nameField = KendaraanModel::VEHICLE_NAME_FIELD;
+        $colorField = KendaraanModel::COLOR_FIELD;
+        $priceField = KendaraanModel::PRICE_FIELD;
+        $stokField = KendaraanModel::STOK_FIELD;
+        $engineField = KendaraanModel::ENGINE_FIELD;
+        $suspensionTypeField = KendaraanModel::SUSPENSION_TYPE_FIELD;
+        $transmissionTypeField = KendaraanModel::TRANSMISSION_TYPE_FIELD;
+
+        $vehicle = new KendaraanModel();
+        $vehicle->$vehicleTypeField = $vehicleData->vehicle_type;
+        $vehicle->$yearOfReleaseField = $vehicleData->year_of_release;
+        $vehicle->$nameField = $vehicleData->name;
+        $vehicle->$colorField = $vehicleData->color;
+        $vehicle->$priceField = $vehicleData->price;
+        $vehicle->$stokField = $vehicleData->stock;
+        $vehicle->$engineField = $vehicleData->engine;
+        $vehicle->$suspensionTypeField = $vehicleData->suspension_type;
+        $vehicle->$transmissionTypeField = $vehicleData->transmission_type;
+
+        return $vehicle->save();
     }
 }
